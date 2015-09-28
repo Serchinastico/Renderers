@@ -34,7 +34,8 @@ import java.util.Collection;
  *
  * @author Pedro Vicente Gómez Sánchez.
  */
-public class RVRendererAdapter<T> extends RecyclerView.Adapter<RendererViewHolder> {
+public class RVRendererAdapter<T> extends RecyclerView.Adapter<RendererViewHolder>
+    implements AdapteeCollection<T> {
 
   private final LayoutInflater layoutInflater;
   private final RendererBuilder<T> rendererBuilder;
@@ -109,12 +110,29 @@ public class RVRendererAdapter<T> extends RecyclerView.Adapter<RendererViewHolde
   }
 
   /**
+   * @return size of the AdapteeCollection<T>.
+   */
+  @Override public int size() {
+    return collection.size();
+  }
+
+  /**
+   * Search an element in the AdapteeCollection<T> using the index passed as argument.
+   *
+   * @param index to search in the collection.
+   * @return the element stored at index passed as argument.
+   */
+  @Override public T get(int index) {
+    return collection.get(index);
+  }
+
+  /**
    * Add an element to the AdapteeCollection<T>.
    *
    * @param element to add.
    */
-  public void add(T element) {
-    collection.add(element);
+  @Override public boolean add(T element) {
+    return collection.add(element);
   }
 
   /**
@@ -122,8 +140,8 @@ public class RVRendererAdapter<T> extends RecyclerView.Adapter<RendererViewHolde
    *
    * @param element to remove.
    */
-  public void remove(T element) {
-    collection.remove(element);
+  @Override public boolean remove(Object element) {
+    return collection.remove(element);
   }
 
   /**
@@ -131,8 +149,8 @@ public class RVRendererAdapter<T> extends RecyclerView.Adapter<RendererViewHolde
    *
    * @param elements to add.
    */
-  public void addAll(Collection<T> elements) {
-    collection.addAll(elements);
+  @Override public boolean addAll(Collection<? extends T> elements) {
+    return collection.addAll(elements);
   }
 
   /**
@@ -140,8 +158,8 @@ public class RVRendererAdapter<T> extends RecyclerView.Adapter<RendererViewHolde
    *
    * @param elements to remove.
    */
-  public void removeAll(Collection<T> elements) {
-    collection.removeAll(elements);
+  @Override public boolean removeAll(Collection<?> elements) {
+    return collection.removeAll(elements);
   }
 
   /**
